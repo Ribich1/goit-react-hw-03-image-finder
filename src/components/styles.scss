@@ -76,7 +76,7 @@ img {
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
+  background-image: url('../research.png');
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
@@ -84,8 +84,9 @@ img {
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   outline: none;
+ 
 }
-
+// https://image.flaticon.com/icons/svg/149/149852.svg
 .SearchForm-button:hover {
   opacity: 1;
 }
@@ -100,6 +101,7 @@ img {
   white-space: nowrap;
   clip-path: inset(50%);
   border: 0;
+
 }
 
 .SearchForm-input {
