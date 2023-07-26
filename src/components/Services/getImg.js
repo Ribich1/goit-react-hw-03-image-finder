@@ -4,11 +4,12 @@ let currentPage = 1;
 const BASE_OPTION = '&image_type=photo&orientation=horizontal&per_page=12';
 
 export const getImg = searchImg => {
-  fetch(
-    `${BASE_URL}/?&q=${searchImg}&page=${currentPage}&key=${API_KEY}${BASE_OPTION}`
-  )
-    .then(response => response.json())
-    .then(images => console.log('images', images));
+  return fetch(
+    `${BASE_URL}/?q=${searchImg}&page=${currentPage}&key=${API_KEY}${BASE_OPTION}`
+  );
 };
 
 // https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
+
+// .then(response => response.json())
+//     .then(images => console.log('images', images));

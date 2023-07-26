@@ -1,11 +1,10 @@
-import { Component } from 'react';
+import React,{ Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import {getImg} from './Services/getImg';
+import ImageGallery from './ImageGallery/ImageGallery';
 
 
-getImg();
 export default class App extends Component {
   state = {
     requestForFind: '',
@@ -20,6 +19,7 @@ export default class App extends Component {
     return (
       <div>
         <Searchbar onSubmit={this.handleFormSubmit} />
+        <ImageGallery searchImg={this.state.requestForFind}/>
         
         <ToastContainer autoClose={3000} />
       </div>
