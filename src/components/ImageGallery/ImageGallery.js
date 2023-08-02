@@ -1,9 +1,8 @@
-import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import React from 'react';
 
-const ImageGallery = ({ searchImg }) => (
+const ImageGallery = ({ children }) => (
   <ul className="ImageGallery">
-    <ImageGalleryItem searchImg={searchImg} />
+    {children}
   </ul>
 );
 export default ImageGallery;

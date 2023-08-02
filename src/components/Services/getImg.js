@@ -1,9 +1,9 @@
 const BASE_URL = 'https://pixabay.com/api';
 const API_KEY = '37177948-5246bdbd194b518a4b536ba26';
-let currentPage = 1;
+// 37177948-5246bdbd194b518a4b536ba26
 const BASE_OPTION = '&image_type=photo&orientation=horizontal&per_page=12';
 
-export const getImg = searchImg => {
+export const getImg = (searchImg,currentPage) => {
   return fetch(
     `${BASE_URL}/?q=${searchImg}&page=${currentPage}&key=${API_KEY}${BASE_OPTION}`
   );

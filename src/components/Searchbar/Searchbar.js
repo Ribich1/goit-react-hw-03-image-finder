@@ -35,7 +35,7 @@ export default class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.imgRequestChange}
+            onChange={this.imgRequestChange} 
             value={this.state.imgFind}
           />
         </form>
