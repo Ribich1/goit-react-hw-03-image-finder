@@ -59,10 +59,10 @@ import React from 'react';
 //   }
 // }
 
-const ImageGalleryItem = ({ src,alt}) => {
+const ImageGalleryItem = ({ src,alt,largeSrc, onClick}) => {
   return (
     <li className="ImageGalleryItem">
-      <img src={src} alt={alt} className="ImageGalleryItem-image" />
+      <img src={src} alt={alt}  className="ImageGalleryItem-image" onClick={onClick}/>
     </li>
   );
 };

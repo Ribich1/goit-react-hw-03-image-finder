@@ -7,6 +7,8 @@ import { getImg } from './Services/getImg';
 import { toast } from 'react-toastify';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Button from './Button/Button';
+import Loader from './Loader/Loader';
+import { Modal } from './Modal/Modal';
 
 export default class App extends Component {
   state = {
@@ -15,6 +17,8 @@ export default class App extends Component {
     page: 1,
     isLoading: false,
     isLoadMoreBtnVisible: false,
+    isModalVisible: false,
+    dataForModal: null,
   };
 
   handleFormSubmit = requestForFind => {
@@ -23,6 +27,14 @@ export default class App extends Component {
 
   handleLoadMoreClick = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
+
+  handleImageClick = e => {
+    console.log('e', e.target.src);
+    this.setState({
+      isModalVisible: true,
+      dataForModal: { src: e.target.src, alt: e.target.alt },
+    });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -43,7 +55,8 @@ export default class App extends Component {
               ...prevState.images,
               ...this.getNormalizedImages(images.hits),
             ],
-            isLoadMoreBtnVisible: this.state.page<Math.ceil(images.totalHits/12)
+            isLoadMoreBtnVisible:
+              this.state.page < Math.ceil(images.totalHits / 12),
           }));
         })
         .catch(error => {
@@ -55,10 +68,11 @@ export default class App extends Component {
     }
   }
   getNormalizedImages(array) {
-    return array.map(({ id, webformatURL, tags }) => ({
+    return array.map(({ id, webformatURL, tags, largeImageURL }) => ({
       id,
       webformatURL,
       tags,
+      largeImageURL,
     }));
   }
 
@@ -70,12 +84,26 @@ export default class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
 
         <ImageGallery>
-          {this.state.images.map(({ id, webformatURL, tags }) => {
-            return <ImageGalleryItem key={id} src={webformatURL} alt={tags} />;
-          })}
+          {this.state.images.map(
+            ({ id, webformatURL, tags, largeImageURL }) => {
+              return (
+                <ImageGalleryItem
+                  key={id}
+                  src={webformatURL}
+                  alt={tags}
+                  largeSrc={largeImageURL}
+                  onClick={this.handleImageClick}
+                />
+              );
+            }
+          )}
         </ImageGallery>
-        {this.state.isLoadMoreBtnVisible && (
+        {this.state.isLoading && <p>Loader...</p>}
+        {this.state.isLoadMoreBtnVisible && !this.state.isLoading && (
           <Button onClick={this.handleLoadMoreClick}></Button>
+        )}
+        {this.isModalVisible && (
+          <Modal dataForModal={this.state.dataForModal} />
         )}
         <ToastContainer autoClose={3000} />
       </div>
