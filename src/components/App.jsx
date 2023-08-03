@@ -7,7 +7,6 @@ import { getImg } from './Services/getImg';
 import { toast } from 'react-toastify';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Button from './Button/Button';
-import Loader from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 
 export default class App extends Component {
