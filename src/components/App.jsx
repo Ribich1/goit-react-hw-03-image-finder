@@ -29,12 +29,16 @@ export default class App extends Component {
   };
 
   handleImageClick = e => {
-    console.log('e', e.target.src);
+    console.log('e.srcjs', e.target.dataset.srcjs);
     this.setState({
       isModalVisible: true,
-      dataForModal: { src: e.target.src, alt: e.target.alt },
+      dataForModal: { src: e.target.dataset.srcjs, alt: e.target.alt },
     });
   };
+
+  toggleModal=()=>{
+  this.setState(({isModalVisible})=>({isModalVisible:!isModalVisible}));
+  }
 
   componentDidUpdate(prevProps, prevState) {
     console.log('prevState.value', prevState);
@@ -101,8 +105,8 @@ export default class App extends Component {
         {this.state.isLoadMoreBtnVisible && !this.state.isLoading && (
           <Button onClick={this.handleLoadMoreClick}></Button>
         )}
-        {this.isModalVisible && (
-          <Modal dataForModal={this.state.dataForModal} />
+        {this.state.isModalVisible && (
+          <Modal dataForModal={this.state.dataForModal} onClose={this.toggleModal} />
         )}
         <ToastContainer autoClose={3000} />
       </div>
