@@ -7,7 +7,7 @@ import { getImg } from './Services/getImg';
 import { toast } from 'react-toastify';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Button from './Button/Button';
-import { Modal } from './Modal/Modal';
+import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
 
 export default class App extends Component {
@@ -30,7 +30,6 @@ export default class App extends Component {
   };
 
   handleImageClick = e => {
-    console.log('e.srcjs', e.target.dataset.srcjs);
     this.setState({
       isModalVisible: true,
       dataForModal: { src: e.target.dataset.srcjs, alt: e.target.alt },
