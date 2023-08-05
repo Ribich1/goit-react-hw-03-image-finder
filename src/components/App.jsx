@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Button from './Button/Button';
 import { Modal } from './Modal/Modal';
+import Loader from './Loader/Loader';
 
 export default class App extends Component {
   state = {
@@ -36,9 +37,11 @@ export default class App extends Component {
     });
   };
 
-  toggleModal=()=>{
-  this.setState(({isModalVisible})=>({isModalVisible:!isModalVisible}));
-  }
+  toggleModal = () => {
+    this.setState(({ isModalVisible }) => ({
+      isModalVisible: !isModalVisible,
+    }));
+  };
 
   componentDidUpdate(prevProps, prevState) {
     console.log('prevState.value', prevState);
@@ -52,15 +55,16 @@ export default class App extends Component {
       getImg(this.state.requestForFind, this.state.page)
         .then(response => response.json())
         .then(images => {
-          console.log('images123', images.hits);
-          this.setState(prevState => ({
-            images: [
-              ...prevState.images,
-              ...this.getNormalizedImages(images.hits),
-            ],
-            isLoadMoreBtnVisible:
-              this.state.page < Math.ceil(images.totalHits / 12),
-          }));
+          if (images.hits.length !== 0) {
+            this.setState(prevState => ({
+              images: [
+                ...prevState.images,
+                ...this.getNormalizedImages(images.hits),
+              ],
+              isLoadMoreBtnVisible:
+                this.state.page < Math.ceil(images.totalHits / 12),
+            }));
+          } else throw new Error('Sorry, there are no images ...');
         })
         .catch(error => {
           toast.error(`${error}`);
@@ -82,10 +86,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {/* {this.state.images.length === 0 &&
-          toast.error('Sorry, there are no images ...')} */}
         <Searchbar onSubmit={this.handleFormSubmit} />
-
         <ImageGallery>
           {this.state.images.map(
             ({ id, webformatURL, tags, largeImageURL }) => {
@@ -101,12 +102,15 @@ export default class App extends Component {
             }
           )}
         </ImageGallery>
-        {this.state.isLoading && <p>Loader...</p>}
+        {this.state.isLoading && <Loader />}
         {this.state.isLoadMoreBtnVisible && !this.state.isLoading && (
           <Button onClick={this.handleLoadMoreClick}></Button>
         )}
         {this.state.isModalVisible && (
-          <Modal dataForModal={this.state.dataForModal} onClose={this.toggleModal} />
+          <Modal
+            dataForModal={this.state.dataForModal}
+            onClose={this.toggleModal}
+          />
         )}
         <ToastContainer autoClose={3000} />
       </div>
